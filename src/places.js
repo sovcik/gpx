@@ -87,7 +87,7 @@ Places.listPlacesLarge = async function(query, lat, lng, width, height){
     let places = [];
     let i=1;
     for (let i=0;i<points.length;i++){
-        let np = await Places.listPlaces(query,points[i].lat, points[i].lng, radius, 100);
+        let np = await Places.listPlaces(query, points[i].lat, points[i].lng, radius, 100);
         places = places.concat(np.filter(p1=>places.findIndex(p2=>p2.place_id === p1.place_id)==-1));
         console.log("#"+i,"New places:",np.length,"Total:",places.length);
     }
@@ -122,10 +122,18 @@ Places.listPlaces = async function( query, lat, long, radius, maxResults=20) {
         for(let i=0;i<res.results.length;i++){
             let item=res.results[i];
             let o = await Places.getPlaceDetails(item.place_id);
+            let postal_code = o.address_components.find(c=>c.types.includes("postal_code"));
+            if (postal_code) postal_code=postal_code.long_name;
+            let a = item.vicinity.split(',');
+            let city = a[a.length-1];
+            a.splice(-1,1);
             allResults.push({
                 place_id:item.place_id, 
                 name:item.name, 
                 vicinity:item.vicinity, 
+                straddr:a.join(', ').trim(),
+                city:city.trim(),
+                postal_code:postal_code,
                 phone:o.international_phone_number, 
                 location:item.geometry.location.lat+','+item.geometry.location.lng, 
                 website:o.website, 

@@ -102,4 +102,9 @@ dist
 
 # TernJS port file
 .tern-port
-places.csv
+
+# CSV ouput files
+*.csv
+
+# start file
+run.sh
