@@ -89,7 +89,7 @@ Places.listPlacesLarge = async function(query, lat, lng, width, height){
     for (let i=0;i<points.length;i++){
         let np = await Places.listPlaces(query, points[i].lat, points[i].lng, radius, 100);
         places = places.concat(np.filter(p1=>places.findIndex(p2=>p2.place_id === p1.place_id)==-1));
-        console.log("#"+i,"New places:",np.length,"Total:",places.length);
+        console.log("#"+(i+1)+"/"+points.length,"New places:",np.length,"Total:",places.length);
     }
     
     return places;
