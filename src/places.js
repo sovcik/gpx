@@ -146,7 +146,7 @@ Places.writePlaces2File = function (fileName, places) {
     places.forEach((p=>writeStream.write('"'+p.place_id+'","'+p.name+'","'+p.vicinity+'","'+p.phone+'","'+p.location+'","'+p.website+'","'+p.link+'"\n','UTF-8')))
 
     writeStream.on('finish', () => {
-        console.log('wrote all data to file');
+        console.log('Data written to file '+fileName);
     });
     
     writeStream.end();

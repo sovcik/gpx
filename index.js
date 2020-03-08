@@ -1,44 +1,26 @@
 const Places = require('./src/places');
-
 const GPlaces = require("google-places-web").default; // instance of GooglePlaces Class;
 require('dotenv').config();
 
 // Setup
-GPlaces.apiKey = process.env.APIKEY;
 GPlaces.debug = false; // boolean;
 
-function testDestPont(){
-    let o = Places.computeDestinationPoint({lat:50.076544,lng:14.429795},500,90);  
-}
-
-function testListPlaces(){
-    Places.listPlaces("veterinar", 50.076544, 14.429795, 50000, 25)
-    .then(r=>console.log("LIST PLACES>>>",r,"<<<END"));
-}
-
-function testListPlacesLarge(){
-    Places.listPlacesLarge( "veterinar", 50.076544, 14.429795, 10000, 10000)
+function listPlacesLarge(query, lat, lng, width, height, fileName){
+    Places.listPlacesLarge(query, lat, lng, width, height)
     .then(r=>{
-        Places.writePlaces2File('places-test.csv',r);
+        Places.writePlaces2File(fileName, r);
         console.log("Done");
     })
 }
 
-function listPlacesLarge(){
-    Places.listPlacesLarge( "veterinar", 50.076544, 14.429795, 100000, 100000)
-    .then(r=>{
-        Places.writePlaces2File('places.csv',r);
-        console.log("Done");
-    })
-}
+GPlaces.apiKey = process.env.APIKEY;  // Google Places API key - get your from https://developers.google.com/places/web-service/get-api-key
 
+const query = "restaurant"; // what to search for
+const latitude = 50.076544; // area center point latitude
+const longtitude = 14.429795; // area center point longtitude
+const area_width = 100000; // area width in meters 
+const area_height = 100000; // area height in meters 
+const fileName = "places.csv"; // save results to CSV
 
-
-//result=Places.getMapPoints(50.076544,14.429795,100000, 100000,10000,10000);
-//console.log(result);
-
-//testListPlaces();
-//testListPlacesLarge();
-
-listPlacesLarge();
+listPlacesLarge(query, latitude, longtitude, area_width, area_height, fileName);
 
