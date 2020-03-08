@@ -18,8 +18,8 @@ GPlaces.apiKey = process.env.APIKEY;  // Google Places API key - get your from h
 const query = "restaurant"; // what to search for
 const latitude = 50.076544; // area center point latitude
 const longtitude = 14.429795; // area center point longtitude
-const area_width = 100000; // area width in meters 
-const area_height = 100000; // area height in meters 
+const area_width = 1000; // area width in meters 
+const area_height = 1000; // area height in meters 
 const fileName = "places.csv"; // save results to CSV
 
 listPlacesLarge(query, latitude, longtitude, area_width, area_height, fileName);
