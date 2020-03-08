@@ -151,7 +151,8 @@ Places.listPlaces = async function( query, lat, long, radius, maxResults=20) {
 Places.writePlaces2File = function (fileName, places) {
     let writeStream = fs.createWriteStream(fileName);
 
-    places.forEach((p=>writeStream.write('"'+p.place_id+'","'+p.name+'","'+p.vicinity+'","'+p.phone+'","'+p.location+'","'+p.website+'","'+p.link+'"\n','UTF-8')))
+    writeStream.write('"place_id"\t"name+"\t"full_address"\t"street_address"\t"city"\t"postal_code"\t"phone"\t"location"\t"website"\t"link"\n','UTF-8');
+    places.forEach((p=>writeStream.write('"'+p.place_id+'"\t"'+p.name+'"\t"'+p.vicinity+'"\t"'+p.straddr+'"\t"'+p.city+'"\t"'+p.postal_code+'"\t"'+p.phone+'"\t"'+p.location+'"\t"'+p.website+'"\t"'+p.link+'"\n','UTF-8')))
 
     writeStream.on('finish', () => {
         console.log('Data written to file '+fileName);
